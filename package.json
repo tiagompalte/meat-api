@@ -4,7 +4,8 @@
   "description": "API de restaurantes",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "dev": "node_modules/.bin/nodemon dist/main.js",
+    "gulp": "node_modules/.bin/gulp"
   },
   "repository": {
     "type": "git",
@@ -18,9 +19,16 @@
   },
   "homepage": "https://github.com/tiagompalte/meat-api#readme",
   "dependencies": {
+    "mongoose": "4.13.9",
     "restify": "6.3.4"
   },
   "devDependencies": {
-    "@types/restify": "5.0.6"
+    "@types/mongoose": "4.7.32",
+    "@types/restify": "5.0.6",
+    "gulp": "^3.9.1",
+    "gulp-clean": "0.3.2",
+    "gulp-typescript": "3.2.2",
+    "nodemon": "^1.17.5",
+    "typescript": "^2.9.1"
   }
 }
