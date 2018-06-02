@@ -6,7 +6,7 @@ import {Router} from '../common/router'
 
 export class Server {
 
-    application: restify.Server
+    app: restify.Server
 
     initializeDb(): mongoose.MongooseThenable {
         (<any>mongoose).Promise = global.Promise
@@ -19,21 +19,21 @@ export class Server {
         return new Promise((resolve, reject) => {
             try {
 
-                this.application = restify.createServer({
+                this.app = restify.createServer({
                     name: 'meat-api',
                     version: '1.0.0'
                 })
 
-                this.application.use(restify.plugins.queryParser())
-                this.application.use(restify.plugins.bodyParser())
+                this.app.use(restify.plugins.queryParser())
+                this.app.use(restify.plugins.bodyParser())
 
                 //routes
                 for (let router of routers) {
-                    router.applyRoutes(this.application)                    
+                    router.applyRoutes(this.app)                    
                 }
 
-                this.application.listen(environment.server.port, () => {
-                    resolve(this.application)
+                this.app.listen(environment.server.port, () => {
+                    resolve(this.app)
                 })
             }
             catch(error) {
