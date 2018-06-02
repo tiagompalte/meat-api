@@ -68,5 +68,7 @@ typings/
 !.vscode/extensions.json
 .history
 
+.sonarlint/
+dist/
 
 # End of https://www.gitignore.io/api/node,visualstudiocode
