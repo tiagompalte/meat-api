@@ -8,7 +8,7 @@ export const handleError = (req: restify.Request, resp: restify.Response, err, d
   }
   switch (err.name) {
     case 'MongoError':
-      if (err.code == 11000) {
+      if (err.code === 11000) {
         err.statusCode = 400
       }
       break
@@ -19,6 +19,7 @@ export const handleError = (req: restify.Request, resp: restify.Response, err, d
         messages.push({ message: err.errors[name].message })
       }
       err.toJSON = () => ({
+        message: 'Validation error while processing your request',
         errors: messages
       })
       break
