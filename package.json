@@ -6,7 +6,7 @@
   "scripts": {
     "dev": "node_modules/.bin/nodemon --delay 5 dist/main.js",
     "gulp": "node_modules/.bin/gulp",
-    "test": "jest"
+    "test": "ts-node src/jest.startup.ts"
   },
   "repository": {
     "type": "git",
@@ -20,6 +20,9 @@
   },
   "homepage": "https://github.com/tiagompalte/meat-api#readme",
   "jest": {
+    "globals" : {
+      "address": "http://localhost:3001"
+    },
     "testEnvironment": "node",
     "transform": {
       "^.+\\.tsx?$": "ts-jest"
@@ -51,9 +54,11 @@
     "gulp-clean": "0.3.2",
     "gulp-typescript": "3.2.2",
     "jest": "22.4.2",
+    "jest-cli": "22.4.2",
     "nodemon": "^1.17.5",
     "supertest": "3.0.0",
     "ts-jest": "22.0.4",
+    "ts-node": "5.0.1",
     "typescript": "2.6.2"
   }
 }
