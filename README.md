@@ -11,4 +11,7 @@ Projeto NodeJs desenvolvido em Typescript e MongoDB. Utilizando [Restify](http:/
 ## Gulp - Transpilar Typescript -> Javascript
 `npm run gulp`
 
+## Rodar os testes
+`npm test`
+
 **GOD* is good*
