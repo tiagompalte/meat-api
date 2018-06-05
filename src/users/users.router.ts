@@ -3,6 +3,7 @@ import { User } from './users.model'
 import { NotFoundError } from 'restify-errors'
 import { ModelRouter } from '../common/model-router'
 import {authenticate} from '../security/auth.handler'
+import { authorize } from '../security/authz.handler'
 
 class UsersRouter extends ModelRouter<User> {
 
@@ -26,13 +27,14 @@ class UsersRouter extends ModelRouter<User> {
   }
 
   applyRoutes(app: restify.Server) {
-    app.get({ path: `${this.basePath}`, version: '2.0.0' }, [this.findByEmail, this.findAll])
-    app.get({ path: `${this.basePath}`, version: '1.0.0' }, this.findAll)
-    app.get(`${this.basePath}/:id`, [this.validateId, this.findById])
-    app.post(`${this.basePath}`, this.save)
-    app.put(`${this.basePath}/:id`, [this.validateId, this.replace])
-    app.patch(`${this.basePath}/:id`, [this.validateId, this.update])
-    app.del(`${this.basePath}/:id`, [this.validateId, this.delete])
+    app.get({ path: `${this.basePath}`, version: '2.0.0' }, [authorize('admin'), this.findByEmail, this.findAll])
+    app.get({ path: `${this.basePath}`, version: '1.0.0' }, [authorize('admin'), this.findAll])
+    app.get(`${this.basePath}/:id`, [authorize('admin'), this.validateId, this.findById])
+    app.post(`${this.basePath}`, [authorize('admin'), this.save])
+    //TODO: criar função onde permite que apenas o próprio usuário pode modificar seus dados
+    app.put(`${this.basePath}/:id`, [authorize('admin', 'user'), this.validateId, this.replace])
+    app.patch(`${this.basePath}/:id`, [authorize('admin', 'user'), this.validateId, this.update])
+    app.del(`${this.basePath}/:id`, [authorize('admin') ,this.validateId, this.delete])
 
     app.post(`${this.basePath}/authenticate`, authenticate)
   }

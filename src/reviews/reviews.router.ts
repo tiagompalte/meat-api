@@ -3,6 +3,7 @@ import * as restify from 'restify'
 import { NotFoundError } from 'restify-errors'
 import { ModelRouter } from '../common/model-router'
 import { Review } from './reviews.model'
+import { authorize } from '../security/authz.handler'
 
 class ReviewRouter extends ModelRouter<Review> {
   constructor() {
@@ -32,7 +33,7 @@ class ReviewRouter extends ModelRouter<Review> {
   applyRoutes(app: restify.Server) {
     app.get(`${this.basePath}`, this.findAll)
     app.get(`${this.basePath}/:id`, [this.validateId, this.findById])
-    app.post(`${this.basePath}`, this.save)
+    app.post(`${this.basePath}`, [authorize('user'), this.save])
   }
 }
 
