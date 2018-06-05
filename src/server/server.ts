@@ -1,3 +1,4 @@
+import * as fs from 'fs'
 import * as restify from 'restify'
 import * as mongoose from 'mongoose'
 
@@ -22,10 +23,16 @@ export class Server {
     return new Promise((resolve, reject) => {
       try {
 
-        this.app = restify.createServer({
+        const options: restify.ServerOptions = {
           name: 'meat-api',
-          version: '1.0.0'
-        })
+          version: '1.0.0',
+        }
+        if(environment.security.enableHTTPS) {
+          options.certificate = fs.readFileSync(process.env.CERT_FILE)
+          options.key = fs.readFileSync(process.env.CERT_KEY)
+        }
+
+        this.app = restify.createServer(options)
 
         this.app.use(restify.plugins.queryParser())
         this.app.use(restify.plugins.bodyParser())

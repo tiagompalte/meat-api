@@ -1,5 +1,5 @@
 import * as jestCli from 'jest-cli'
-
+import * as request from 'supertest'
 import {Server} from './server/server'
 import {environment} from './common/environment'
 import {usersRouter} from './users/users.router'
@@ -20,6 +20,14 @@ const beforeAllTests = () => {
     restaurantsRouter
   ])
   .then(()=>User.remove({}).exec())
+  .then(() => {
+    let admin = new User()
+    admin.name = 'admin'
+    admin.email = 'admin@email.com'
+    admin.password = ''
+    admin.profiles = ['admin', 'user']
+    return admin.save()
+  })
   .then(()=>Review.remove({}).exec())
   .then(()=>Restaurant.remove({}).exec())
 }

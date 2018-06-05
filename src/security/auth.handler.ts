@@ -5,7 +5,7 @@ import { NotAuthorizedError } from 'restify-errors'
 import {environment} from '../common/environment'
 
 export const authenticate: restify.RequestHandler = (req, resp, next) => {
-  const {email, password} = req. body
+  const {email, password} = req.body
   User.findByEmail(email,'+password')
       .then(user => {
         if(user && user.matches(password)) {

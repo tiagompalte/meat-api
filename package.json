@@ -21,7 +21,8 @@
   "homepage": "https://github.com/tiagompalte/meat-api#readme",
   "jest": {
     "globals": {
-      "address": "http://localhost:3001"
+      "address": "http://localhost:3001",
+      "auth": "Bearer "
     },
     "testEnvironment": "node",
     "transform": {

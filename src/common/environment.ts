@@ -3,6 +3,9 @@ export const environment = {
   db: { url: process.env.DB_URL || 'mongodb://localhost/meat-api' },
   security: {
     saltRounds: process.env.SALT_ROUND || 10,
-    apiSecret: process.env.API_SECRET || 'meat-api-secret'
+    apiSecret: process.env.API_SECRET || 'meat-api-secret',
+    enableHTTPS: process.env.ENABLE_HTTPS || false,
+    certificate: process.env.CERT_FILE || './security/keys/cert.pem',
+    key: process.env.CERT_KEY || './security/keys/key.pem'
   }
 }

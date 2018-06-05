@@ -5,7 +5,8 @@ import {environment} from '../common/environment'
 import {usersRouter} from './users.router'
 import {User} from './users.model'
 
-let address: string = (<any> global).address
+const address: string = (<any> global).address
+const auth: string = (<any> global).auth
 
 test('get /users - v1.0.0', () => {
   return request(address)

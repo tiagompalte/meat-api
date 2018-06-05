@@ -70,5 +70,6 @@ typings/
 
 .sonarlint/
 dist/
+src/security/keys/
 
 # End of https://www.gitignore.io/api/node,visualstudiocode
