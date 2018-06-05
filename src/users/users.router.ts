@@ -2,6 +2,7 @@ import * as restify from 'restify'
 import { User } from './users.model'
 import { NotFoundError } from 'restify-errors'
 import { ModelRouter } from '../common/model-router'
+import {authenticate} from '../security/auth.handler'
 
 class UsersRouter extends ModelRouter<User> {
 
@@ -32,6 +33,8 @@ class UsersRouter extends ModelRouter<User> {
     app.put(`${this.basePath}/:id`, [this.validateId, this.replace])
     app.patch(`${this.basePath}/:id`, [this.validateId, this.update])
     app.del(`${this.basePath}/:id`, [this.validateId, this.delete])
+
+    app.post(`${this.basePath}/authenticate`, authenticate)
   }
 }
 
