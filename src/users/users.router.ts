@@ -28,14 +28,14 @@ class UsersRouter extends ModelRouter<User> {
 
   verifyUser = (req: restify.Request, resp, next) => {
     if(req.authenticated.hasAny('admin')) {
-      next()
+      return next()
     }
     else if(req.authenticated.hasAny('user')) {
       if(req.params.id === req.authenticated.id) {
-        next()
+        return next()
       }
     }
-    next(new UnauthorizedError())
+    return next(new UnauthorizedError())
   }
 
   applyRoutes(app: restify.Server) {

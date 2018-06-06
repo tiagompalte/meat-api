@@ -31,9 +31,15 @@ class ReviewRouter extends ModelRouter<Review> {
   }*/
 
   applyRoutes(app: restify.Server) {
+
+    const createdBy = (req, resp, next) => {
+      req.body.user = req.authenticated
+      return next()
+    }
+
     app.get(`${this.basePath}`, this.findAll)
     app.get(`${this.basePath}/:id`, [this.validateId, this.findById])
-    app.post(`${this.basePath}`, [authorize('user'), this.save])
+    app.post(`${this.basePath}`, [authorize('user'), createdBy, this.save])
   }
 }
 
