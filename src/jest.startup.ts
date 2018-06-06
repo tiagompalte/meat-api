@@ -24,7 +24,7 @@ const beforeAllTests = () => {
     let admin = new User()
     admin.name = 'admin'
     admin.email = 'admin@email.com'
-    admin.password = ''
+    admin.password = 'admin'
     admin.profiles = ['admin', 'user']
     return admin.save()
   })

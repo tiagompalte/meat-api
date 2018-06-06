@@ -22,7 +22,7 @@
   "jest": {
     "globals": {
       "address": "http://localhost:3001",
-      "auth": "Bearer "
+      "auth": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJhZG1pbkBlbWFpbC5jb20iLCJpc3MiOiJtZWF0LWFwaSJ9.a3ZnLu1Tu79Gyev6ldc3-uir3e90pat6A5bOfoYJ9Ic"
     },
     "testEnvironment": "node",
     "transform": {

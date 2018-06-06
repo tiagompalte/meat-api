@@ -12,6 +12,7 @@ test('get /users - v1.0.0', () => {
   return request(address)
     .get('/users')
     .set('Accept-version', '1.0.0')
+    .set("Authorization", auth)
     .then(response => {
       expect(response.status).toBe(200)
       expect(response.body.items).toBeInstanceOf(Array)
@@ -22,6 +23,7 @@ test('get /users - v1.0.0', () => {
 test('post /users', () => {
   return request(address)
     .post('/users')
+    .set("Authorization", auth)
     .send({
       name: 'usuario_post',
       email: 'usuario_post@email.com',
@@ -42,6 +44,7 @@ test('post /users', () => {
 test('get /users/aaaa - not found', () => {
   return request(address)
     .get('/users/aaaa')
+    .set("Authorization", auth)
     .then(response => {
       expect(response.status).toBe(404)
     })
@@ -51,6 +54,7 @@ test('get /users/aaaa - not found', () => {
 test('put /users:id', () => {
   return request(address)
     .post('/users')
+    .set("Authorization", auth)
     .send({
       name: 'usuario_put',
       email: 'usuario_put@email.com',
@@ -58,10 +62,12 @@ test('put /users:id', () => {
     })
     .then(response =>
       request(address)
-        .patch(`/users/${response.body._id}`)
+        .put(`/users/${response.body._id}`)
+        .set("Authorization", auth)
         .send({
           name: 'usuario_put2',
           email: 'usuario_put@email.com',
+          password: 'alterado'
         })
     )
     .then(response => {
@@ -77,6 +83,7 @@ test('put /users:id', () => {
 test('patch /users:id', () => {
   return request(address)
     .post('/users')
+    .set("Authorization", auth)
     .send({
       name: 'usuario_patch',
       email: 'usuario_patch@email.com',
@@ -85,6 +92,7 @@ test('patch /users:id', () => {
     .then(response =>
       request(address)
         .patch(`/users/${response.body._id}`)
+        .set("Authorization", auth)
         .send({
           name: 'usuario_patch2'
         })
@@ -102,6 +110,7 @@ test('patch /users:id', () => {
 test('delete /users:id', () => {
   return request(address)
     .delete('/users')
+    .set("Authorization", auth)
     .send({
       name: 'usuario_delete',
       email: 'usuario_delete@email.com',
@@ -110,6 +119,7 @@ test('delete /users:id', () => {
     .then(response =>
       request(address)
         .delete(`/users/${response.body._id}`)
+        .set("Authorization", auth)
     )
     .then(response => {
       expect(response.status).toBe(404)
