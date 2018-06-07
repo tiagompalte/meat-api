@@ -4,6 +4,7 @@ import {Server} from '../server/server'
 import {environment} from '../common/environment'
 import {usersRouter} from './users.router'
 import {User} from './users.model'
+import { response } from 'spdy';
 
 const address: string = (<any> global).address
 const auth: string = (<any> global).auth
@@ -123,6 +124,78 @@ test('delete /users:id', () => {
     )
     .then(response => {
       expect(response.status).toBe(404)
+    })
+    .catch(fail)
+})
+
+test('authenticate /users/authenticate', () => {
+  return request(address)
+    .post('/users')
+    .set("Authorization", auth)
+    .send({
+      name: 'usuario_auth',
+      email: 'usuario_auth@email.com',
+      password: 'usuario_auth'
+    })
+    .then(response =>
+      request(address)
+        .post('/users/authenticate')
+        .send({
+            email: 'usuario_auth@email.com',
+            password: 'usuario_auth'
+        })
+    )
+    .then(response => {
+      expect(response.status).toBe(200)
+      expect(response.body.name).toBe('usuario_auth')
+      expect(response.body.email).toBe('usuario_auth@email.com')
+      expect(response.body.accessToken).toBeDefined()
+    })
+    .catch(fail)
+})
+
+test('authenticate /users/authenticate --wrong password', () => {
+  return request(address)
+    .post('/users')
+    .set("Authorization", auth)
+    .send({
+      name: 'usuario_auth2',
+      email: 'usuario_auth2@email.com',
+      password: 'usuario_auth'
+    })
+    .then(response =>
+      request(address)
+        .post('/users/authenticate')
+        .send({
+            email: 'usuario_auth2@email.com',
+            password: 'auth'
+        })
+    )
+    .then(response => {
+      expect(response.status).toBe(403)
+    })
+    .catch(fail)
+})
+
+test('authenticate /users/authenticate --wrong email', () => {
+  return request(address)
+    .post('/users')
+    .set("Authorization", auth)
+    .send({
+      name: 'usuario_auth3',
+      email: 'usuario_auth3@email.com',
+      password: 'usuario_auth'
+    })
+    .then(response =>
+      request(address)
+        .post('/users/authenticate')
+        .send({
+            email: 'usuario_wrong_email@email.com',
+            password: 'usuario_auth'
+        })
+    )
+    .then(response => {
+      expect(response.status).toBe(403)
     })
     .catch(fail)
 })
