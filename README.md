@@ -14,4 +14,10 @@ Projeto NodeJs desenvolvido em Typescript e MongoDB. Utilizando [Restify](http:/
 ## Rodar os testes
 `npm test`
 
+## Rodar a aplicação com PM2
+`pm2 start ecosystem.config.js`
+
+## Acompanhar os logs da aplicação
+`pm2 logs`
+
 **GOD* is good*
